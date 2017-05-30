@@ -11,8 +11,8 @@ module SinatraMore
     end
 
     # Login the user through the specified, or specific warden strategy
-    def authenticate(*args)
-      warden_handle.authenticate(*args)
+    def authenticate_user!(*args)
+      warden_handle.authenticate!(*args)
     end
 
     # Signs out the user
