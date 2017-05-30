@@ -32,12 +32,10 @@ module SinatraMore
       cattr_accessor :user_class
 
       def valid?
-        byebug
         api_key || organization_id
       end
 
       def authenticate!
-        byebug
         raise "Please either define a user class or set SinatraMore::WardenPlugin::ApiStrategy.user_class" unless user_class
         u = user_class.api_authenticate(api_key, organization_id)
         u.nil? ? fail!("Could not authenticate") : success!(u)
@@ -65,8 +63,8 @@ module SinatraMore
       app.helpers SinatraMore::OutputHelpers
       app.helpers SinatraMore::WardenHelpers
       Warden::Manager.before_failure { |env,opts| env['REQUEST_METHOD'] = "POST" }
-      Warden::Strategies.add(:password, PasswordStrategy)
-      Warden::Strategies.add(:api, ApiStrategy)
+      #Warden::Strategies.add(:password, PasswordStrategy)
+      #Warden::Strategies.add(:api, ApiStrategy)
       PasswordStrategy.user_class = User if defined?(User)
       ApiStrategy.user_class = User if defined?(Users)
     end
