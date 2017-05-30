@@ -64,7 +64,7 @@ module SinatraMore
       app.helpers SinatraMore::WardenHelpers
       Warden::Manager.before_failure { |env,opts| env['REQUEST_METHOD'] = "POST" }
       #Warden::Strategies.add(:password, PasswordStrategy)
-      #Warden::Strategies.add(:api, ApiStrategy)
+      Warden::Strategies.add(:api, ApiStrategy)
       PasswordStrategy.user_class = User if defined?(User)
       ApiStrategy.user_class = User if defined?(Users)
     end
