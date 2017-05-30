@@ -5,12 +5,7 @@ module SinatraMore
       warden_handler.user
     end
 
-    # Login the user through all strategies
-    def authenticate_user!
-      warden_handler.authenticate!
-    end
-
-    # Login the user through the specified, or specific warden strategy
+    # Login the user through strategies
     def authenticate_user!(*args)
       warden_handler.authenticate!(*args)
     end
