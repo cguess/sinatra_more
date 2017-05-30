@@ -55,7 +55,7 @@ module SinatraMore
     def self.registered(app)
       raise "WardenPlugin::Error - Install warden with 'sudo gem install warden' to use plugin!" unless Warden && Warden::Manager
       app.use Warden::Manager do |manager|
-        manager.default_strategies :api
+        manager.default_strategies :password, :api
         manager.failure_app = app
         manager.serialize_into_session { |user| user.nil? ? nil : user.id }
         manager.serialize_from_session { |id| id.nil? ? nil : PasswordStrategy.user_class.find(id) }
@@ -63,7 +63,7 @@ module SinatraMore
       app.helpers SinatraMore::OutputHelpers
       app.helpers SinatraMore::WardenHelpers
       Warden::Manager.before_failure { |env,opts| env['REQUEST_METHOD'] = "POST" }
-      #Warden::Strategies.add(:password, PasswordStrategy)
+      Warden::Strategies.add(:password, PasswordStrategy)
       Warden::Strategies.add(:api, ApiStrategy)
       PasswordStrategy.user_class = User if defined?(User)
       ApiStrategy.user_class = User if defined?(Users)
